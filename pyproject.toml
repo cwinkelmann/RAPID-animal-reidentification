@@ -37,6 +37,12 @@ dependencies = [
     "pyyaml>=6.0",
 ]
 
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "flake8>=7.0",
+]
+
 [project.scripts]
 RAPID = "rapid.RAPID:main"
 FalseTagFinder = "rapid.FalseTagFinder:main"
