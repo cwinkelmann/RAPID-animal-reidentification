@@ -1,6 +1,8 @@
 import os
 import csv
 import pickle
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -167,29 +169,25 @@ def save_prediction_results_csv(prediction_results, save_dir, topN=5):
     n_query = true_count + false_count
     top1_acc = true_count / n_query if (true_count + false_count) > 0 else 0
 
-    # Build the header
-    header = [
+    # Build the result DataFrame
+    columns = [
         "query_img",
         "provided_ID",
         "predicted_ID",
         "confidence_score",
         "IDs_matching",
-        "",
+        "", # empty column on purpose
     ]
     for i in range(1, topN + 1):
-        header += [f"pred{i}", f"weight{i}"]
+        columns += [f"pred{i}", f"weight{i}"]
 
-    # Write CSV
-    with open(
-        save_dir + f"/prediction_results_{int(top1_acc * 100)}%_{n_query}query.csv",
-        "w",
-        newline="",
-    ) as f:
-        writer = csv.writer(f)
-        writer.writerow(header)
-        writer.writerows(prediction_results)
+    df = pd.DataFrame(prediction_results, columns=columns)
 
-    print(f"Prediction results saved to {save_dir}/prediction_results.csv")
+    filename = f"prediction_results_{int(top1_acc * 100)}%_{n_query}query.csv"
+    save_path = Path(save_dir) / filename
+    df.to_csv(save_path, index=False)
+
+    print(f"Prediction results saved to {save_path}")
 
 
 # Optional path cleaner
