@@ -25,13 +25,11 @@ from rapid.modules.utils import (
 )
 
 
-def main():
+def main(config_path: Path):
     ################################################################################
     #                               PREPARATION
     ################################################################################
 
-    # LOAD CONFIG
-    config_path = Path(__file__).parent.parent.parent / "config" / "config_RAPID.yaml"
 
     with open(config_path, "r") as f:
         cfg = yaml.safe_load(f)
@@ -220,4 +218,6 @@ def main():
 # *************************************************************************
 
 if __name__ == "__main__":
-    main()
+    # LOAD CONFIG
+    config_path = Path(__file__).parent.parent.parent / "config" / "config_RAPID.yaml"
+    main(config_path=config_path)
