@@ -27,3 +27,5 @@ echo "Syncing dependencies with uv..."
 uv sync --active || { echo "Failed to sync dependencies. Check pyproject.toml"; exit 1; }
 
 echo "✅ Installation completed successfully!"
+
+uv run pytest || { echo "Tests Failed for RAPID"; exit 1; }
